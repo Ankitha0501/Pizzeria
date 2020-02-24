@@ -1,0 +1,120 @@
+My project is a pizza form, where people can order pizza and the price gets updated, 
+depending on whether they want delivery or not
+
+-----------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace PizzaMiniProject {
+    public partial class Form1 : Form {
+        public Form1() {
+            InitializeComponent();
+            MaximizeBox = false;
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e) {
+            bool error = false;
+            if (lbPizzaSelection.SelectedItem != null) {
+                if (txtQuantity.Text != "") {
+                    lbQuantity.Items.Add(txtQuantity.Text);
+                    int cost = 0;
+                    if (lbPizzaSelection.SelectedItem == "Neapolitan") {
+                        cost = Convert.ToInt32(txtQuantity.Text) * 50;
+                        lbAmount.Items.Add(cost);
+                    }
+                    if (lbPizzaSelection.SelectedItem == "Margherita") {
+                        cost = Convert.ToInt32(txtQuantity.Text) * 60;
+                        lbAmount.Items.Add(cost);
+                    }
+                    if (lbPizzaSelection.SelectedItem == "Pepperoni") {
+                        cost = Convert.ToInt32(txtQuantity.Text) * 80;
+                        lbAmount.Items.Add(cost);
+                    }
+                    if (lbPizzaSelection.SelectedItem == "Lazio") {
+                        cost = Convert.ToInt32(txtQuantity.Text) * 70;
+                        lbAmount.Items.Add(cost);
+                    }
+                    if (lbPizzaSelection.SelectedItem == "Zucchini") {
+                        cost = Convert.ToInt32(txtQuantity.Text) * 90;
+                        lbAmount.Items.Add(cost);
+                    }
+                    txtQuantity.Focus();
+                    txtQuantity.Clear();
+                } else {
+                    error = true;
+                    MessageBox.Show("Please enter a valid Quantity", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    lblAmount.Focus();
+                }
+                if (error == false) {
+                    lbOrdered.Items.Add(lbPizzaSelection.SelectedItem);
+                    lbPizzaSelection.Items.Remove(lbPizzaSelection.SelectedItem);
+                }
+            } else {
+                MessageBox.Show("No Pizza Selected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void txtQuantity_KeyPress(object sender, KeyPressEventArgs e) {
+            char ch = e.KeyChar;
+            if (!Char.IsDigit(ch) && ch != 8) //method makes it so all digits[numbers] can be clicked expect the backwards which is 8.
+            {
+                e.Handled = true;
+                MessageBox.Show("Quantity must be a number!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnReset_Click(object sender, EventArgs e) {
+            if (checkDelivery.Checked) {
+                checkDelivery.Checked = false;
+            }
+            lbOrdered.Items.Clear();
+            lbAmount.Items.Clear();
+            lbQuantity.Items.Clear();
+            lblAmount.Text = "";
+            lblOrder.Text = "";
+            MessageBox.Show("Form Reset.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnOrder_Click(object sender, EventArgs e) {
+            if (lbOrdered.Items.Count > 0) {
+                int sum = 0;
+                for (int i = 0; i < lbAmount.Items.Count; i++) {//using a dummy variable i to store
+                    sum += Convert.ToInt32(lbAmount.Items[i].ToString());//convert to int or double in order to be mathimtical
+                }//add to the sum instead of keeps changing in order to get total value.
+                lblAmount.Text = Convert.ToString(sum);//once done re-convert to string t be used.
+                double[] currencies = { 1, 3.67, 5.12 };
+                int currency = 0;
+                if (currencyUAE.Checked) {
+                    currency = 0;
+                }
+                if (currencyUS.Checked) {
+                    currency = 1;
+                }
+                if (currencyEuro.Checked) {
+                    currency = 2;
+                }
+                double price = int.Parse(lblAmount.Text) / currencies[currency];
+                lblAmount.Text = string.Format("{0:#.##}", price);
+                if (checkDelivery.Checked) {
+                    double totalPrice = double.Parse(lblAmount.Text) + (double.Parse(lblAmount.Text) * 0.05);
+                    lblOrder.Text = string.Format("{0:#.##}", totalPrice);
+                    MessageBox.Show("Have a nice meal! - No Express Delivery!");
+                } else {
+                    double totalPrice = double.Parse(lblAmount.Text);
+                    lblOrder.Text = string.Format("{0:#.##}", totalPrice);
+                    MessageBox.Show("Have a nice meal!");
+                }
+            } else {
+                MessageBox.Show("Place an order first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
+}

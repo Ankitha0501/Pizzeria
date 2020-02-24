@@ -1,0 +1,32 @@
+@Html.ActionLink(" Pizzeria", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink(" About", "About", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink(" Contact", "contact", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                
+                    @Html.ActionLink(" Register", "Register", "Account", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink(" Login/SignUp", "Login", "Account", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink(" Logout", "Logout", "Account", new { area = "" }, new { @class = "navbar-brand" })
+
+
+
+
+
+
+
+
+var customerlist =
+             (from a in db.DBookChoreographers
+              join b in db.DanceClassRooms
+                  on a.ClassRoomId equals b.ClassRoomId
+              join c in db.Candidates on a.userID equals c.userID
+              join d in db.Candidates on b.choreographerId equals d.userID
+              where c.username == user
+              select new { 
+                  d.username,
+                  d.City,
+                  d.MobileNumber,
+                  d.Email,
+                  a.DanceType
+
+              }).ToList(); 
+  var userId = (from a in db.Candidates.Where(a => a.username == bookChoreographer.name) select  ( a.userID )).FirstOrDefault();                     
+                dBookChoreographer.userID = Convert.ToInt32(userId); 

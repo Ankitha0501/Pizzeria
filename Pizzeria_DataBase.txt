@@ -1,0 +1,116 @@
+Database Tables:
+----------------
+1.Roles table
+2.Users table
+3.Pizza category table
+4.Pizzas table
+5.PizzaPrice
+6.Size
+7.Orders table
+
+
+
+*****************************************
+tb_Roles:
+==========
+column Name             DataType           constraint
+------------------------------------------------------------- 
+ ID                     int                Primary key, identity
+ RoleName               varchar(100)       not null        
+
+
+
+
+******************************************************************** 
+
+
+tb_Users:
+=============
+column Name             DataType            constraint
+----------------------------------------------------------------
+ UserID                  int              Primary key,identity 
+ FirstName             varchar(150)       not null
+ LastName              varchar(150)       not null
+ Username              varchar(150)       not null
+ Password              varchar(150)       not null         
+ Email                 varchar(150)       not null
+ Address               varchar(150)       not null
+ PhoneNumber           varchar(150)       not null
+ City                  varchar(150)       not null
+UserRoleType           int              foreign key (tb_Roles,ID)
+
+
+********************************************************************
+
+tb_PizzaCategory:
+================
+column Name             DataType            constraint
+----------------------------------------------------------------
+ CategoryID             int                Primary key,identity
+ CategoryName           varchar(150)       not null
+
+
+********************************************************************
+tb_Pizzas:
+================
+column Name             DataType            constraint
+----------------------------------------------------------------
+PizzaID                 int                 Primary key,identity
+CategoryID             int                 foreign key(tb_PizzaCategory,CategoryID)
+PizzaName               varchar(150)        not null
+PizzaLogo               varbinary(max)      not null        
+
+
+
+********************************************************************
+tb_PizzaPrice:
+================
+column Name             DataType            constraint
+----------------------------------------------------------------
+ID                      int                Primary key,identity
+PizzaID                 int                foreign key(tb_Pizza,ID)
+SizeID                  int                foreign key(tb_Size,ID)
+Price                   money              not null
+ 
+
+********************************************************************                      
+tb_PizzaSize:
+================
+column Name             DataType            constraint
+----------------------------------------------------------------
+  ID                     int                Primary key,identity
+  PizzaName              Varchar(30)        foreign key(tb_Pizzas,PizzaName)
+  Small                  Varchar(30)
+  Mediam                 Varchar(30)
+  Large                  Varchar(30)
+
+********************************************************************
+tb_Orders:
+================
+column Name             DataType            constraint
+----------------------------------------------------------------
+O_ID                 int                 Primary key,identity
+UserID                  varchar(150)        foreign key (tb_Users,UserID)
+PizzaPriceID            int                 foreign key (tb_PizzaPrice,ID)
+OrderStatus             bit                 not null 
+OrderType               varchar(150)	    not null   
+DelivaryDateTime        DateTime            not null  
+DelivaryAddress         varchar(200)        not null
+Quantity                int                 not null
+
+
+CONSTRAINT pk_PersonID PRIMARY KEY (P_Id,LastName)
+
+
+
+*******************************************************
+
+table: - Size (id, name S,ML)
+ PizzaPrice:
+ PizId, SizeId, Price
+
+
+
+
+
+

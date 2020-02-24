@@ -1,0 +1,80 @@
+Database Tables:
+----------------
+1.Customers table
+2.Employees table
+3.Pizza category table
+4.Pizzas table
+5.Orders table
+
+
+*****************************************
+
+
+
+tb_Customers:
+=============
+column Name             DataType            constraint
+----------------------------------------------------------------
+ CustomerID                   int             Primary key,identity 
+ FirstName             varchar(150)       not null
+ LastName              varchar(150)       not null
+ Email                 varchar(150)       not null
+ Address               varchar(150)       not null
+ PhoneNumber           varchar(150)       not null
+ City                  varchar(150)       not null
+
+
+********************************************************************
+tb_Employees:
+=============
+column Name             DataType            constraint
+----------------------------------------------------------------
+  EmpID                    int             Primary key,identity
+  FirstName             varchar(150)       not null
+  LastName              varchar(150)       not null
+  Email                 varchar(150)       not null
+  Address               varchar(150)       not null
+  PhoneNumber           varchar(150)       not null
+  City                  varchar(150)       not null
+
+********************************************************************
+tb_PizzaCategory:
+================
+column Name             DataType            constraint
+----------------------------------------------------------------
+ CategoryID             int                Primary key,identity
+ CategoryName           varchar(150)       not null
+  
+
+
+********************************************************************
+tb_Pizzas:
+================
+column Name             DataType            constraint
+----------------------------------------------------------------
+PizzaID                 int                 Primary key,identity
+PizzaName               varchar(150)        not null
+PizzaLogo               varbinary(max)      not null
+Category                varchar(20)        
+PizzaPrice              money               not null
+
+********************************************************************
+tb_Orders:
+================
+column Name             DataType            constraint
+----------------------------------------------------------------
+OrderID                 int                 Primary key,identity
+CustomerID              int                 foreign key(tb_Customers)
+PizzaID                 int                 foreign key(tb_Pizzas)
+OrderStatus             bit                 not null
+TotalPrice              money               not null
+
+
+           
+
+
+
+
+
+
+
